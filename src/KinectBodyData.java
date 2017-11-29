@@ -1,5 +1,3 @@
-
-
 import processing.data.JSONArray;
 
 public class KinectBodyData {

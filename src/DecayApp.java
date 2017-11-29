@@ -1,61 +1,69 @@
 import java.io.IOException;
+import java.util.LinkedHashMap;
 
 import processing.core.PApplet;
-import processing.core.PImage;
 import processing.core.PVector;
 
 public class DecayApp extends PApplet{
 	public static float PROJECTOR_RATIO = 1080f/1920.0f;
 	
+	String recordingFile = "test.kinect";
+	KinectBodyDataProvider kinectReader;
+	PersonTracker tracker = new PersonTracker();
+	
+	LinkedHashMap<Long, Person> people;
+	
 	float xoff = 0.0f;
 	float yoff = 0.0f;
 	float increment = 0.005f; 
-	String recordingFile = "test.kinect";
-	KinectBodyDataProvider kinectReader;
-	PImage head;
 	
 	public void settings() {
 		createWindow(false, false, .5f);
 	}
 
 	public void setup() {
-		if(recordingFile != null)
-			try {
-				kinectReader = new KinectBodyDataProvider("test.kinect", 10);
-			} catch (IOException e) {
-				System.out.println("Unable to create kinect producer");
-			}
-		else {
-			kinectReader = new KinectBodyDataProvider(8008);
+		
+		try {
+			kinectReader = new KinectBodyDataProvider("test2.kinect", 10);
+		} catch (IOException e) {
+			System.out.println("Unable to create kinect producer");
 		}
 		
-		head = loadImage("skull.png");;  // Declare variable "a" of type PImage
+		people = new LinkedHashMap<Long, Person>();
+		
+		kinectReader.start();
 	}
 
 	public void draw() {
-	  // Create an alpha blended background
-	  fill(0, 10);
-	  rect(0,0,width,height);
-	  noStroke();
+		setScale(.5f);
+		background(0);
+		KinectBodyData bodyData = kinectReader.getData();
+		tracker.update(bodyData);
+		
+		// Create an alpha blended background
+//		fill(0, 10);
+//		rect(0,0,width,height);
+//		noStroke();
+		
+		for(Long id : tracker.getEnters()) {
+			people.put(id,  new Person(this, .1f));
+		}
+		
+		for(Long id: tracker.getExits()) {
+			people.remove(id);
+		}
+		 
+		 for(Body b : tracker.getPeople().values()) {
+			Person p = people.get(b.getId());
+			p.update(b);
+			p.drawHead();
+		}
+		 
 	  
-	  //float n = random(0,width);  // Try this line instead of noise
-	  
-	  // Get a noise value based on xoff and scale it according to the window's width
-	  float n = noise(xoff)*width;
-	  float ny = noise(yoff)*height;
-	  
-	  // With each cycle, increment xoff
-	  xoff += increment;
-	  yoff += increment;
-	  
-	  
-	  // Draw the ellipse at the value produced by perlin noise
-	  fill(200);
-	  image(head, n, ny, head.width/10, head.height/10);
-	  //ellipse(n,ny, 64, 64);
 	}
 	
 	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void createWindow(boolean useP2D, boolean isFullscreen, float windowsScale) {
 		if (useP2D) {
