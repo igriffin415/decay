@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 public class DecayApp extends PApplet{
@@ -17,6 +18,8 @@ public class DecayApp extends PApplet{
 	float yoff = 0.0f;
 	float increment = 0.005f; 
 	
+	PImage head, ribs;
+	
 	public void settings() {
 		createWindow(false, false, .5f);
 	}
@@ -24,12 +27,14 @@ public class DecayApp extends PApplet{
 	public void setup() {
 		
 		try {
-			kinectReader = new KinectBodyDataProvider("test2.kinect", 10);
+			kinectReader = new KinectBodyDataProvider("test.kinect", 10);
 		} catch (IOException e) {
 			System.out.println("Unable to create kinect producer");
 		}
 		
 		people = new LinkedHashMap<Long, Person>();
+		head = loadImage("skull.png");
+		ribs = loadImage("ribcase.png");
 		
 		kinectReader.start();
 	}
@@ -37,28 +42,37 @@ public class DecayApp extends PApplet{
 	public void draw() {
 		setScale(.5f);
 		background(0);
+		
 		KinectBodyData bodyData = kinectReader.getData();
 		tracker.update(bodyData);
 		
-		// Create an alpha blended background
-//		fill(0, 10);
-//		rect(0,0,width,height);
-//		noStroke();
+		noStroke();
+		//image(head, 0, 0, head.width/15, head.height/15);
+
 		
 		for(Long id : tracker.getEnters()) {
-			people.put(id,  new Person(this, .1f));
+			people.put(id,  new Person(this));
 		}
 		
 		for(Long id: tracker.getExits()) {
 			people.remove(id);
 		}
-		 
+		 Person p = null;
 		 for(Body b : tracker.getPeople().values()) {
-			Person p = people.get(b.getId());
-			p.update(b);
-			p.drawHead();
+			p = people.get(b.getId());
+			p.update(b);			
 		}
-		 
+		 float nx = 0;
+		float ny = 0;
+		if(p.getBody().getJoint(Body.HEAD) != null) {
+			nx = noise(p.getBody().getJoint(Body.HEAD).x)*width;
+			ny = noise(p.getBody().getJoint(Body.HEAD).y)*width;
+			System.out.println(p.getBody().getJoint(Body.HEAD).x +" "+ p.getBody().getJoint(Body.HEAD).y);
+			image(head, 
+					p.getBody().getJoint(Body.HEAD).x, 
+					p.getBody().getJoint(Body.HEAD).y, 
+				  head.width/15, head.height/15);
+		}
 	  
 	}
 	

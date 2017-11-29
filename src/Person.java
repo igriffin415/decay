@@ -5,36 +5,35 @@ import processing.core.PVector;
 public class Person {
 	Body body;
 	PApplet app;
-	PImage head, ribs;
 	
-	float xoff = 0.0f;
-	float yoff = 0.0f;
-	float increment = 0.005f;
+	float noiseScale = 0.02f;
 	
-	public Person(PApplet app, float size) {
+//	PImage head, ribs;
+	
+	public Person(PApplet app) {
 		this.app = app;		
-		head = app.loadImage("skull.png");
-		ribs = app.loadImage("ribcase.png");
+//		head = app.loadImage("skull.png");
+//		ribs = app.loadImage("ribcase.png");
 	}
 
 	public void update(Body body) {
 		this.body = body;
 	}	
 	
-	public void drawHead() {
+	public void drawHead(PImage image) {
 	 // Get a noise value based on xoff and scale it according to the window's width
 		float nx = 0;
 		float ny=0;
 		if(body.getJoint(Body.HEAD) != null) {
-			nx = app.noise(xoff)* body.getJoint(Body.HEAD).x;
-			ny = app.noise(yoff)* body.getJoint(Body.HEAD).y;
+			nx = app.noise(body.getJoint(Body.HEAD).x)*noiseScale;
+			ny = app.noise(body.getJoint(Body.HEAD).y)*noiseScale;
+			  
+			app.image(image, 0, 0);
 		}
-	  
-	  // With each cycle, increment xoff
-	  xoff += increment;
-	  yoff += increment;
-	  
-	  app.image(head, nx, ny, head.width/10, head.height/10);
+	}
+	
+	public Body getBody() {
+		return body;
 	}
 	
 	public PVector getRightHand() {
