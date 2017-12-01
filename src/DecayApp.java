@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-import processing.core.PVector;
 
 public class DecayApp extends PApplet{
 	public static float PROJECTOR_RATIO = 1080f/1920.0f;
@@ -60,27 +59,7 @@ public class DecayApp extends PApplet{
 		 Body b = i.next();
 		 Person p = people.get(b.getId());
 		 p.update(b);
-
-		 if(p.getHead() != null) {
-			 image(head, p.getHead().x, p.getHead().y, 
-				   head.width/10, head.height/10);
-			 
-		 }
-//		 for(Body b : tracker.getPeople().values()) {
-//			p = people.get(b.getId());
-//			p.update(b);			
-//		}
-//		 float nx = 0;
-//		float ny = 0;
-//		if(p.getBody().getJoint(Body.HEAD) != null) {
-////			nx = noise(p.getBody().getJoint(Body.HEAD).x)*width;
-////			ny = noise(p.getBody().getJoint(Body.HEAD).y)*width;
-//			image(head, 
-//					p.getBody().getJoint(Body.HEAD).x, 
-//					p.getBody().getJoint(Body.HEAD).y, 
-//				  head.width/15, head.height/15);
-//		}
-	  
+		 p.drawHead();
 	}
 	
 	
