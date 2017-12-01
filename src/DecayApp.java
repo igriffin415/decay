@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import processing.core.PApplet;
@@ -40,13 +41,13 @@ public class DecayApp extends PApplet{
 	}
 
 	public void draw() {
-		setScale(.5f);
+		//setScale(0.5f);
 		background(0);
 		
 		KinectBodyData bodyData = kinectReader.getData();
 		tracker.update(bodyData);
 		
-		noStroke();
+		imageMode(CENTER);
 		//image(head, 0, 0, head.width/15, head.height/15);
 
 		
@@ -57,22 +58,29 @@ public class DecayApp extends PApplet{
 		for(Long id: tracker.getExits()) {
 			people.remove(id);
 		}
-		 Person p = null;
-		 for(Body b : tracker.getPeople().values()) {
-			p = people.get(b.getId());
-			p.update(b);			
-		}
-		 float nx = 0;
-		float ny = 0;
-		if(p.getBody().getJoint(Body.HEAD) != null) {
-			nx = noise(p.getBody().getJoint(Body.HEAD).x)*width;
-			ny = noise(p.getBody().getJoint(Body.HEAD).y)*width;
-			System.out.println(p.getBody().getJoint(Body.HEAD).x +" "+ p.getBody().getJoint(Body.HEAD).y);
-			image(head, 
-					p.getBody().getJoint(Body.HEAD).x, 
-					p.getBody().getJoint(Body.HEAD).y, 
-				  head.width/15, head.height/15);
-		}
+		 Iterator<Body> i = tracker.getPeople().values().iterator();
+		 Body b = i.next();
+		 Person p = people.get(b.getId());
+		 p.update(b);
+		 if(p.getHead() != null) {
+			 image(head, p.getHead().x, p.getHead().y, 
+				   head.width/10, head.height/10);
+			 
+		 }
+//		 for(Body b : tracker.getPeople().values()) {
+//			p = people.get(b.getId());
+//			p.update(b);			
+//		}
+//		 float nx = 0;
+//		float ny = 0;
+//		if(p.getBody().getJoint(Body.HEAD) != null) {
+////			nx = noise(p.getBody().getJoint(Body.HEAD).x)*width;
+////			ny = noise(p.getBody().getJoint(Body.HEAD).y)*width;
+//			image(head, 
+//					p.getBody().getJoint(Body.HEAD).x, 
+//					p.getBody().getJoint(Body.HEAD).y, 
+//				  head.width/15, head.height/15);
+//		}
 	  
 	}
 	
