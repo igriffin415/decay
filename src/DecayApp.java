@@ -42,14 +42,12 @@ public class DecayApp extends PApplet{
 
 	public void draw() {
 		//setScale(0.5f);
-		background(0);
+		imageMode(CENTER);
+		fill(0, 10);
+		rect(0,0,width,height);
 		
 		KinectBodyData bodyData = kinectReader.getData();
 		tracker.update(bodyData);
-		
-		imageMode(CENTER);
-		//image(head, 0, 0, head.width/15, head.height/15);
-
 		
 		for(Long id : tracker.getEnters()) {
 			people.put(id,  new Person(this));
@@ -62,6 +60,7 @@ public class DecayApp extends PApplet{
 		 Body b = i.next();
 		 Person p = people.get(b.getId());
 		 p.update(b);
+
 		 if(p.getHead() != null) {
 			 image(head, p.getHead().x, p.getHead().y, 
 				   head.width/10, head.height/10);
