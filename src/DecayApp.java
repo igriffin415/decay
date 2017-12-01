@@ -21,11 +21,10 @@ public class DecayApp extends PApplet{
 	PImage head, ribs;
 	
 	public void settings() {
-		createWindow(false, false, .5f);
+		createWindow(true, false, .5f);
 	}
 
-	public void setup() {
-		
+	public void setup() {	
 		try {
 			kinectReader = new KinectBodyDataProvider("test.kinect", 10);
 		} catch (IOException e) {
@@ -40,10 +39,9 @@ public class DecayApp extends PApplet{
 	}
 
 	public void draw() {
-		//setScale(0.5f);
+		setScale(0.5f);
 		imageMode(CENTER);
-		fill(0, 10);
-		rect(0,0,width,height);
+		background(0,10);
 		
 		KinectBodyData bodyData = kinectReader.getData();
 		tracker.update(bodyData);
@@ -80,7 +78,7 @@ public class DecayApp extends PApplet{
 			}
 		}		
 	}
-
+	
 	// use lower numbers to zoom out (show more of the world)
 	// zoom of 1 means that the window is 2 meters wide and appox 1 meter tall.
 	public void setScale(float zoom) {

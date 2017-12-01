@@ -8,8 +8,6 @@ public class Person {
 	PVector headv, ribsv;
 	PImage head, ribs;
 	
-	float noiseScale = 0.02f;
-	
 	public Person(PApplet app) {
 		this.app = app;		
 		head = app.loadImage("skull.png");
@@ -23,9 +21,13 @@ public class Person {
 	
 	public void drawHead() {
 		if(headv != null) {
+			app.imageMode(PApplet.CENTER);
+			app.noStroke();
+			app.ellipse(headv.x, headv.y, .5f, .5f);
 			app.image(head, headv.x, headv.y,
 					  head.width/10, head.height/10);
 		}
+		
 	}
 	
 	public PVector getHead() {
