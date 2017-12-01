@@ -21,7 +21,7 @@ public class DecayApp extends PApplet{
 	PImage head, ribs;
 	
 	public void settings() {
-		createWindow(true, false, .5f);
+		createWindow(true, true, .5f);
 	}
 
 	public void setup() {	
@@ -42,6 +42,7 @@ public class DecayApp extends PApplet{
 		setScale(0.5f);
 		imageMode(CENTER);
 		background(0,10);
+//		image(ribs, 0,0, ribs.width/100, ribs.height/100);
 		
 		KinectBodyData bodyData = kinectReader.getData();
 		tracker.update(bodyData);
@@ -58,6 +59,7 @@ public class DecayApp extends PApplet{
 		 Person p = people.get(b.getId());
 		 p.update(b);
 		 p.drawHead();
+		 p.drawRibs();
 	}
 	
 	
