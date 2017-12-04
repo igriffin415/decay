@@ -12,12 +12,17 @@ public class Person {
 	PImage headFlower;
 	private boolean noDecay = true;
 	
+	float[] prevPosHead;
+	float[] prevPosRibs;
+	
 	public Person(PApplet app) {
 		this.app = app;		
 		head = app.loadImage("assets/goathead.png");
 		ribs = app.loadImage("assets/ribcase.png");
 		flowers = new Bouquet(app);
 		headFlower = app.loadImage("assets/pinkflower.png");
+		prevPosHead = new float[] {0.0f, 0.0f};
+		prevPosRibs = new float[] {0.0f, 0.0f};
 	}
 
 	public void update(Body body) {
@@ -42,20 +47,28 @@ public class Person {
 	
 	public void drawHead() {
 		if(headv != null) {
+			prevPosHead[0] = headv.x;
+			prevPosHead[1] = headv.y;
+			
 			app.image(head, headv.x, headv.y+.1f,
 					  1.3f, 1.1f);
 			
-			//determine here whether event is being triggered - hands above head maybe?
-			if(lefthandv != null && righthandv != null) {
-				if(lefthandv.y > headv.y && righthandv.y > headv.y) {
-					disappear = true;
-				} else {
-					disappear = false;
-				}
-			}
-			
 			//draw flower on head
 			app.image(headFlower, headv.x, headv.y+.2f, .2f, .2f);
+//			if(disappear) {
+//				//make it black
+//				app.tint(0);
+//			} else {
+//				//color
+//				app.tint(255);
+//			}
+		}
+		else {
+			app.image(head, prevPosHead[0], prevPosHead[1]+.1f,
+					  1.3f, 1.1f);
+			
+			//draw flower on head
+			app.image(headFlower, prevPosHead[0], prevPosHead[1]+.2f, .2f, .2f);
 			if(disappear) {
 				//make it black
 				app.tint(0);
@@ -68,25 +81,49 @@ public class Person {
 	
 	public void drawRibs() {
 		if(ribsv != null) {
+			prevPosRibs[0] = ribsv.x;
+			prevPosRibs[1] = ribsv.y;
+			
 			//draw ribs themselves
 			app.image(ribs, ribsv.x, ribsv.y - .25f,
 					  ribs.width/100, ribs.height/100);
 			
 			//draw flowers on the ribs
+			flowerCheck();
 			boolean stateChange = flowers.draw(ribsv.x, ribsv.y, disappear);
-			if(stateChange && disappear) {
-				noDecay = false;
-			}
-			if(stateChange && !disappear) {
-				noDecay = true;
-			}
+		}
+		else {
+			app.image(ribs, prevPosRibs[0], prevPosRibs[1] - .25f,
+					  ribs.width/100, ribs.height/100);
+			
+			//draw flowers on the ribs
+			flowerCheck();
+			boolean stateChange = flowers.draw(prevPosRibs[0], prevPosRibs[1], disappear);
+//			if(stateChange && disappear) {
+//				noDecay = false;
+//			}
+//			if(stateChange && !disappear) {
+//				noDecay = true;
+//			}
 		}
 	}
 	
 	public PVector getHead() {
-		PVector head = body.getJoint(Body.HEAD);
-		if(head != null)
-			return head;
-		return null;
+		return headv;
+	}
+	
+	public PVector getSpine() {
+		return ribsv;
+	}
+	
+	private void flowerCheck() {
+		if(ribsv != null) {
+			if(ribsv.x < 0) {
+				disappear = true;
+			}
+			else {
+				disappear = false;
+			}
+		}
 	}
 }

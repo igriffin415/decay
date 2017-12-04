@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PVector;
 
 public class DecayApp extends PApplet{
 	public static float PROJECTOR_RATIO = 1080f/1920.0f;
@@ -53,6 +54,7 @@ public class DecayApp extends PApplet{
 		 p.drawRibs();
 		 p.drawHead();
 	}
+	
 	
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
