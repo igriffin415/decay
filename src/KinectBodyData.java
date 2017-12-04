@@ -4,7 +4,11 @@ public class KinectBodyData {
 	JSONArray jarray;
 
 	public int getPersonCount() {
-		return jarray.size();
+		try {
+			return jarray.size();
+		} catch (Exception ex) {
+			return 0;
+		}
 	}
 
 	/**
