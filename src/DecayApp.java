@@ -35,7 +35,6 @@ public class DecayApp extends PApplet{
 		setScale(0.5f);
 		imageMode(CENTER);
 		background(0,10);
-//		image(ribs, 0,0, ribs.width/100, ribs.height/100);
 		
 		KinectBodyData bodyData = kinectReader.getData();
 		tracker.update(bodyData);
