@@ -91,4 +91,10 @@ public class Bouquet {
 		}
 		return stateChange;
 	}
+	
+	public void addAllGrow(float add) {
+		for(Flower flower : flowerList){
+			flower.addGrow(add);
+		}
+	}
 }

@@ -20,7 +20,7 @@ public class Flower {
 		this.parent = parent;
 		this.relativeX = relativeX;
 		this.relativeY = relativeY;
-		growRate = parent.random(0,.01f);
+		growRate = parent.random(0,.005f);
 		selectFlower();
 	}
 	
@@ -79,6 +79,10 @@ public class Flower {
 		} else {
 			img = parent.loadImage("assets/whiteredflower.png");
 		}
+	}
+	
+	public void addGrow(float add) {
+		growRate += add;
 	}
 	
 }

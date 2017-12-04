@@ -73,6 +73,7 @@ public class Person {
 					  ribs.width/100, ribs.height/100);
 			
 			//draw flowers on the ribs
+			flowerCheck();
 			boolean stateChange = flowers.draw(ribsv.x, ribsv.y, disappear);
 			if(stateChange && disappear) {
 				noDecay = false;
@@ -84,9 +85,21 @@ public class Person {
 	}
 	
 	public PVector getHead() {
-		PVector head = body.getJoint(Body.HEAD);
-		if(head != null)
-			return head;
-		return null;
+		return headv;
+	}
+	
+	public PVector getSpine() {
+		return ribsv;
+	}
+	
+	private void flowerCheck() {
+		if(ribsv != null) {
+			if(ribsv.z < 2) {
+				disappear = true;
+			}
+			else if(ribsv.z <= 2) {
+				disappear = false;
+			}
+		}
 	}
 }
