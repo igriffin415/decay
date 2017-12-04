@@ -14,7 +14,7 @@ public class Person {
 	
 	public Person(PApplet app) {
 		this.app = app;		
-		head = app.loadImage("assets/skull.png");
+		head = app.loadImage("assets/goathead.png");
 		ribs = app.loadImage("assets/ribcase.png");
 		flowers = new Bouquet(app);
 		headFlower = app.loadImage("assets/pinkflower.png");
@@ -43,7 +43,7 @@ public class Person {
 	public void drawHead() {
 		if(headv != null) {
 			app.image(head, headv.x, headv.y+.1f,
-					  head.width/60, head.height/60);
+					  1.3f, 1.1f);
 			
 			//determine here whether event is being triggered - hands above head maybe?
 			if(lefthandv != null && righthandv != null) {
