@@ -50,8 +50,8 @@ public class DecayApp extends PApplet{
 		 Body b = i.next();
 		 Person p = people.get(b.getId());
 		 p.update(b);
-		 p.drawHead();
 		 p.drawRibs();
+		 p.drawHead();
 	}
 	
 	
