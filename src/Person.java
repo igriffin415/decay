@@ -14,8 +14,8 @@ public class Person {
 	
 	public Person(PApplet app) {
 		this.app = app;		
-		head = app.loadImage("skull.png");
-		ribs = app.loadImage("ribcase.png");
+		head = app.loadImage("assets/skull.png");
+		ribs = app.loadImage("assets/ribcase.png");
 		flowers = new Bouquet(app);
 		headFlower = app.loadImage("assets/pinkflower.png");
 	}
