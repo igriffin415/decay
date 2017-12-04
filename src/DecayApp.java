@@ -14,11 +14,6 @@ public class DecayApp extends PApplet{
 	
 	LinkedHashMap<Long, Person> people;
 	
-	float xoff = 0.0f;
-	float yoff = 0.0f;
-	float increment = 0.005f; 
-	
-	PImage head, ribs;
 	
 	public void settings() {
 		createWindow(true, false, .5f);
@@ -32,11 +27,6 @@ public class DecayApp extends PApplet{
 		}
 		
 		people = new LinkedHashMap<Long, Person>();
-		head = loadImage("skull.png");
-		ribs = loadImage("ribcase.png");
-		
-//		PImage test = loadImage("assets/deepredflower2.png");
-//		image(test,0,0);
 		
 		kinectReader.start();
 	}
