@@ -15,6 +15,8 @@ public class DecayApp extends PApplet{
 	
 	LinkedHashMap<Long, Person> people;
 	
+	PImage fadeImage;
+	
 	
 	public void settings() {
 		createWindow(true, false, .5f);
@@ -35,9 +37,12 @@ public class DecayApp extends PApplet{
 	}
 
 	public void draw() {
+		fadeImage = loadImage("assets/featuredBGFade.png");
+		fadeImage.resize(this.displayWidth, this.displayHeight);
 		setScale(0.5f);
 		imageMode(CENTER);
-		background(0,10);
+		background(0,0,0);
+		//fill(0,0,0);
 		
 		KinectBodyData bodyData = kinectReader.getData();
 		tracker.update(bodyData);
