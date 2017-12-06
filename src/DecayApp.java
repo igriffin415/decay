@@ -25,7 +25,7 @@ public class DecayApp extends PApplet{
 		
 	//}
 
-		createWindow(false, false, .25f);
+		createWindow(true, false, .25f);
 	}
 
 	public void setup() {	
