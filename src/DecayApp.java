@@ -17,8 +17,8 @@ public class DecayApp extends PApplet{
 	
 	
 	public void settings() {
-		createWindow(false, false, .25f);
-	}//
+		createWindow(true, false, .5f);
+	}
 
 	public void setup() {	
 //		try {
@@ -49,6 +49,7 @@ public class DecayApp extends PApplet{
 		for(Long id: tracker.getExits()) {
 			people.remove(id);
 		}
+		
 		 Iterator<Body> i = tracker.getPeople().values().iterator();
 		 if(i.hasNext()) {
 			 Body b = i.next();
