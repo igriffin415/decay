@@ -23,13 +23,13 @@ public class DecayApp extends PApplet{
 	}
 
 	public void setup() {	
-//		try {
-//			kinectReader = new KinectBodyDataProvider("test.kinect", 10);
-//		} catch (IOException e) {
-//			System.out.println("Unable to create kinect producer");
-//		}
+		try {
+			kinectReader = new KinectBodyDataProvider("test.kinect", 10);
+		} catch (IOException e) {
+			System.out.println("Unable to create kinect producer");
+		}
 				 
-		kinectReader = new KinectBodyDataProvider(8008);
+		//kinectReader = new KinectBodyDataProvider(8008);
 		
 		people = new LinkedHashMap<Long, Person>();
 		
@@ -42,26 +42,29 @@ public class DecayApp extends PApplet{
 		setScale(0.5f);
 		imageMode(CENTER);
 		background(0,0,0);
-		//fill(0,0,0);
 		
 		KinectBodyData bodyData = kinectReader.getData();
+		
 		tracker.update(bodyData);
-		
-		for(Long id : tracker.getEnters()) {
-			people.put(id,  new Person(this));
-		}
-		
-		for(Long id: tracker.getExits()) {
-			people.remove(id);
-		}
 		
 		 Iterator<Body> i = tracker.getPeople().values().iterator();
 		 if(i.hasNext()) {
-			 Body b = i.next();
-			 Person p = people.get(b.getId());
-			 p.update(b);
-			 p.drawRibs();
-			 p.drawHead();
+			Body b = i.next();
+			Person p;
+			p = people.get(b.getId());
+			if(p== null) {
+				 p = new Person(this);
+				 people.put(b.getId(), p);
+			}
+			for(Long id : people.keySet()) {
+				if(! tracker.getPeople().keySet().contains(id)) {
+					people.remove(id);
+				}
+			}
+
+			p.update(b);
+			p.drawRibs();
+			p.drawHead();
 		 }
 	}
 	
