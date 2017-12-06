@@ -17,15 +17,17 @@ public class DecayApp extends PApplet{
 	
 	
 	public void settings() {
-		createWindow(true, false, .5f);
+		createWindow(false, false, .25f);
 	}
 
 	public void setup() {	
-		try {
-			kinectReader = new KinectBodyDataProvider("test.kinect", 10);
-		} catch (IOException e) {
-			System.out.println("Unable to create kinect producer");
-		}
+//		try {
+//			kinectReader = new KinectBodyDataProvider("test.kinect", 10);
+//		} catch (IOException e) {
+//			System.out.println("Unable to create kinect producer");
+//		}
+				 
+		kinectReader = new KinectBodyDataProvider(8008);
 		
 		people = new LinkedHashMap<Long, Person>();
 		
@@ -48,11 +50,13 @@ public class DecayApp extends PApplet{
 			people.remove(id);
 		}
 		 Iterator<Body> i = tracker.getPeople().values().iterator();
-		 Body b = i.next();
-		 Person p = people.get(b.getId());
-		 p.update(b);
-		 p.drawRibs();
-		 p.drawHead();
+		 if(i.hasNext()) {
+			 Body b = i.next();
+			 Person p = people.get(b.getId());
+			 p.update(b);
+			 p.drawRibs();
+			 p.drawHead();
+		 }
 	}
 	
 	
