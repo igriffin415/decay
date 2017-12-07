@@ -3,6 +3,8 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 public class Person {
+	private static int TRAIL = 80;
+	
 	private Body body;
 	private PApplet app;
 	private PVector headv, ribsv, lefthandv, righthandv;
@@ -14,6 +16,14 @@ public class Person {
 	
 	float[] prevPosHead;
 	float[] prevPosRibs;
+
+	PVector[] lefthandarray;
+	PVector[] righthandarray;
+
+	PVector prevPosLeft;
+	PVector prevPosRight;
+
+	int counter;
 	
 	public Person(PApplet app) {
 		this.app = app;		
@@ -23,6 +33,15 @@ public class Person {
 		headFlower = app.loadImage("assets/pinkflower.png");
 		prevPosHead = new float[] {0.0f, 0.0f};
 		prevPosRibs = new float[] {0.0f, 0.0f};
+
+		lefthandarray = new PVector[TRAIL];
+		righthandarray = new PVector[TRAIL];
+
+		prevPosLeft = new PVector(0,0,0);
+		prevPosRight = new PVector(0,0,0);
+
+
+		counter = 0;
 	}
 
 	public void update(Body body) {
@@ -32,7 +51,52 @@ public class Person {
 		//track hands
 		lefthandv = body.getJoint(Body.HAND_LEFT);
 		righthandv = body.getJoint(Body.HAND_RIGHT);
+		
+		if(lefthandv != null){
+			prevPosLeft = lefthandv;
+			lefthandarray[counter] = lefthandv;
+
+		} else{
+			lefthandarray[counter] = prevPosLeft;
+		}
+
+		if(righthandv != null){
+			prevPosRight = righthandv;
+			righthandarray[counter] = righthandv;
+
+		} else {
+			righthandarray[counter] = prevPosRight;
+
+		}
 	}	
+	
+	public void drawHandTrails(){
+		PVector leftH;
+		PVector rightH;
+		//drawing here vvv
+
+		for(int i = 0; i < TRAIL; i++){
+			if(counter == 0 && i ==0 ){
+				 leftH = lefthandarray[0];
+				 rightH = righthandarray[0];
+			} else {
+				leftH = lefthandarray[(counter+i)%TRAIL];
+				rightH = righthandarray[(counter+i)%TRAIL];
+			}
+
+			if(leftH != null && rightH != null){
+				app.fill(192, 255-((255/TRAIL) * i));//, 255-(25.5f*i));
+				app.noStroke();
+
+				app.ellipse(leftH.x, leftH.y, .1f, .1f);
+				app.ellipse(rightH.x, rightH.y, .1f, .1f);
+			}
+		}
+		counter++;
+		if(counter >= TRAIL){
+			counter = 0;
+		}
+	}
 	
 	/**
 	 * Display the background appropriate to the current state

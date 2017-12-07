@@ -65,6 +65,7 @@ public class DecayApp extends PApplet{
 			p.update(b);
 			p.drawRibs();
 			p.drawHead();
+			p.drawHandTrails();
 		 }
 	}
 	
