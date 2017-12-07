@@ -11,7 +11,7 @@ public class Person {
 	private PImage head, ribs;
 	private Bouquet flowers;
 	private boolean disappear = false; //true if flowers should be disappearing
-	PImage headFlower;
+	PImage headFlower, smoke;
 	private boolean noDecay = true;
 	
 	float[] prevPosHead;
@@ -29,6 +29,7 @@ public class Person {
 		this.app = app;		
 		head = app.loadImage("assets/goathead.png");
 		ribs = app.loadImage("assets/ribcase.png");
+		smoke = app.loadImage("assets/smoke.png");
 		flowers = new Bouquet(app);
 		headFlower = app.loadImage("assets/pinkflower.png");
 		prevPosHead = new float[] {0.0f, 0.0f};
@@ -73,25 +74,38 @@ public class Person {
 	public void drawHandTrails(){
 		PVector leftH;
 		PVector rightH;
+		
+		//start at counter-1 and go backwards to counter
 		//drawing here vvv
+		
+		int start = counter - 1;
+		if(start < 0) {
+			start = TRAIL - (start * -1);  
+		}
 
 		for(int i = 0; i < TRAIL; i++){
 			if(counter == 0 && i ==0 ){
 				 leftH = lefthandarray[0];
 				 rightH = righthandarray[0];
 			} else {
-				leftH = lefthandarray[(counter+i)%TRAIL];
-				rightH = righthandarray[(counter+i)%TRAIL];
+				leftH = lefthandarray[(start+i)%TRAIL];
+				rightH = righthandarray[(start+i)%TRAIL];
 			}
 
 			if(leftH != null && rightH != null){
-				app.fill(192, 255-((255/TRAIL) * i));//, 255-(25.5f*i));
-				app.noStroke();
-
-				app.ellipse(leftH.x, leftH.y, .1f, .1f);
-				app.ellipse(rightH.x, rightH.y, .1f, .1f);
+				//app.fill(192, 255-((255/TRAIL) * i));
+				//app.noStroke();
+				app.tint(255-((255/TRAIL) * i));
+				app.image(smoke, leftH.x, leftH.y,
+							.1f, .1f);
+				app.image(smoke, rightH.x, rightH.y,
+						.1f, .1f);
+				
+//				app.ellipse(leftH.x, leftH.y, .1f, .1f);
+//				app.ellipse(rightH.x, rightH.y, .1f, .1f);
 			}
 		}
+		
 		counter++;
 		if(counter >= TRAIL){
 			counter = 0;
