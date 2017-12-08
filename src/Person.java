@@ -4,7 +4,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 public class Person {
-	private static int TRAIL = 80;
+	private static int TRAIL = 30;
 	
 	private Body body;
 	private PApplet app;
@@ -82,8 +82,8 @@ public class Person {
 	}
 	
 	
-	public PGraphics drawHandTrails(){
-		buffer.beginDraw();
+	public void drawHandTrails(){
+//		buffer.beginDraw();
        // buffer.imageMode(app.CENTER );
 //        if(righthandv != null)
 //        	buffer.image(smoke, righthandv.x, righthandv.y, .1f, .1f);
@@ -93,9 +93,9 @@ public class Person {
 //        	buffer.image(smoke, lefthandv.x, lefthandv.y, .1f, .1f);
 //        else
 //        	buffer.image(smoke, prevPosLeft.x, prevPosLeft.y, .1f, .1f);
-        buffer.noStroke();
-        buffer.fill(125);
-        buffer.ellipse(0, 0, 0.1f, 0.1f);
+//        buffer.noStroke();
+//        buffer.fill(125);
+//        buffer.ellipse(0, 0, 0.1f, 0.1f);
 //        if(righthandv != null) 
 //        	buffer.ellipse(righthandv.x, righthandv.y, .1f, .1f);
 //        else
@@ -105,8 +105,8 @@ public class Person {
 //        else
 //        	buffer.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
         
-        buffer.endDraw();
-        app.image(buffer, 0, 0);
+//        buffer.endDraw();
+//        app.image(buffer, 0, 0);
         
 //        app.fill(125);
 //        app.noStroke();
@@ -116,47 +116,46 @@ public class Person {
 //        else
 //        	app.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
         
-        return buffer;
+        //return buffer;
         //app.image(buffer, 0, 0);
 		
-//		PVector leftH;
-//		PVector rightH;
-//		
-//		//start at counter-1 and go backwards to counter
-//		//drawing here vvv
-//		
-//		int start = counter - 1;
-//		if(start < 0) {
-//			start = TRAIL - (start * -1);  
-//		}
-//
-//		for(int i = 0; i < TRAIL; i++){
-//			if(counter == 0 && i ==0 ){
-//				 leftH = lefthandarray[0];
-//				 rightH = righthandarray[0];
-//			} else {
-//				leftH = lefthandarray[(start+i)%TRAIL];
-//				rightH = righthandarray[(start+i)%TRAIL];
-//			}
-//
-//			if(leftH != null && rightH != null){
-//				//app.fill(192, 255-((255/TRAIL) * i));
-//				//app.noStroke();
-//				app.tint(255-((255/TRAIL) * i));
+		PVector leftH;
+		PVector rightH;
+		
+		//start at counter-1 and go backwards to counter
+		//drawing here vvv
+		
+		int start = counter - 1;
+		if(start < 0) {
+			start = TRAIL - (start * -1);  
+		}
+
+		for(int i = 0; i < TRAIL; i++){
+			if(counter == 0 && i ==0 ){
+				 leftH = lefthandarray[0];
+				 rightH = righthandarray[0];
+			} else {
+				leftH = lefthandarray[(start+i)%TRAIL];
+				rightH = righthandarray[(start+i)%TRAIL];
+			}
+
+			if(leftH != null && rightH != null){
 //				app.image(smoke, leftH.x, leftH.y,
-//							.1f, .1f);
+//							.2f, .2f);
 //				app.image(smoke, rightH.x, rightH.y,
-//						.1f, .1f);
-//				
-////				app.ellipse(leftH.x, leftH.y, .1f, .1f);
-////				app.ellipse(rightH.x, rightH.y, .1f, .1f);
-//			}
-//		}
-//		
-//		counter++;
-//		if(counter >= TRAIL){
-//			counter = 0;
-//		}
+//						.2f, .2f);
+				
+				app.fill(192, ((255/TRAIL) * i));
+				app.noStroke();
+				app.ellipse(leftH.x, leftH.y, .1f, .1f);
+				app.ellipse(rightH.x, rightH.y, .1f, .1f);
+			}
+		}
+		
+		counter++;
+		if(counter >= TRAIL){
+			counter = 0;
+		}
 	}
 	
 	/**
