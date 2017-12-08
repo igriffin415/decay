@@ -102,9 +102,9 @@ public class Person {
 			}
 
 			if(leftH != null && rightH != null){
-				app.image(smoke, leftH.x, leftH.y,
+				app.image(smoke, leftH.x-.1f, leftH.y,
 							.2f, .2f);
-				app.image(smoke, rightH.x, rightH.y,
+				app.image(smoke, rightH.x+.1f, rightH.y,
 						.2f, .2f);
 				
 //				app.fill(192, ((255/TRAIL) * i));
