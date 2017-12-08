@@ -15,8 +15,8 @@ public class Person {
 	PImage headFlower, smoke;
 	private boolean noDecay = true;
 	
-	float[] prevPosHead;
-	float[] prevPosRibs;
+	PVector prevPosHead;
+	PVector  prevPosRibs;
 
 	PVector[] lefthandarray;
 	PVector[] righthandarray;
@@ -25,8 +25,7 @@ public class Person {
 	PVector prevPosRight;
 
 	int counter;
-	
-	PGraphics buffer;
+
 	
 	public Person(PApplet app) {
 		this.app = app;		
@@ -35,16 +34,14 @@ public class Person {
 		smoke = app.loadImage("assets/smoke.png");
 		flowers = new Bouquet(app);
 		headFlower = app.loadImage("assets/pinkflower.png");
-		prevPosHead = new float[] {0.0f, 0.0f};
-		prevPosRibs = new float[] {0.0f, 0.0f};
+		prevPosHead = new PVector(0,0,0);
+		prevPosRibs = new PVector(0,0,0);
 
 		lefthandarray = new PVector[TRAIL];
 		righthandarray = new PVector[TRAIL];
 
 		prevPosLeft = new PVector(0,0,0);
 		prevPosRight = new PVector(0,0,0);
-		
-		buffer = app.createGraphics(app.width, app.height, app.P2D);
 
 		counter = 0;
 	}
@@ -83,41 +80,6 @@ public class Person {
 	
 	
 	public void drawHandTrails(){
-//		buffer.beginDraw();
-       // buffer.imageMode(app.CENTER );
-//        if(righthandv != null)
-//        	buffer.image(smoke, righthandv.x, righthandv.y, .1f, .1f);
-//        else
-//        	buffer.image(smoke, prevPosRight.x, prevPosRight.y, .1f, .1f);
-//        if(lefthandv != null)
-//        	buffer.image(smoke, lefthandv.x, lefthandv.y, .1f, .1f);
-//        else
-//        	buffer.image(smoke, prevPosLeft.x, prevPosLeft.y, .1f, .1f);
-//        buffer.noStroke();
-//        buffer.fill(125);
-//        buffer.ellipse(0, 0, 0.1f, 0.1f);
-//        if(righthandv != null) 
-//        	buffer.ellipse(righthandv.x, righthandv.y, .1f, .1f);
-//        else
-//        	buffer.ellipse(prevPosRight.x, prevPosRight.y, .1f, .1f);
-//        if(lefthandv != null)
-//        	buffer.ellipse(lefthandv.x, lefthandv.y, .1f, .1f);
-//        else
-//        	buffer.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
-        
-//        buffer.endDraw();
-//        app.image(buffer, 0, 0);
-        
-//        app.fill(125);
-//        app.noStroke();
-//        
-//        if(lefthandv != null)
-//        	app.ellipse(lefthandv.x, lefthandv.y, .1f, .1f);
-//        else
-//        	app.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
-        
-        //return buffer;
-        //app.image(buffer, 0, 0);
 		
 		PVector leftH;
 		PVector rightH;
@@ -165,8 +127,7 @@ public class Person {
 	
 	public void drawHead() {
 		if(headv != null) {
-			prevPosHead[0] = headv.x;
-			prevPosHead[1] = headv.y;
+			prevPosHead = headv;
 			
 			app.image(head, headv.x, headv.y+.1f,
 					  1.3f, 1.1f);
@@ -182,11 +143,11 @@ public class Person {
 //			}
 		}
 		else {
-			app.image(head, prevPosHead[0], prevPosHead[1]+.1f,
+			app.image(head, prevPosHead.x, prevPosHead.y+.1f,
 					  1.3f, 1.1f);
 			
 			//draw flower on head
-			app.image(headFlower, prevPosHead[0], prevPosHead[1]+.2f, .2f, .2f);
+			app.image(headFlower, prevPosHead.x, prevPosHead.y+.2f, .2f, .2f);
 			if(disappear) {
 				//make it black
 				app.tint(0);
@@ -199,8 +160,7 @@ public class Person {
 	
 	public void drawRibs() {
 		if(ribsv != null) {
-			prevPosRibs[0] = ribsv.x;
-			prevPosRibs[1] = ribsv.y;
+			prevPosRibs = ribsv;
 			
 			//draw ribs themselves
 			app.image(ribs, ribsv.x, ribsv.y - .25f,
@@ -211,12 +171,12 @@ public class Person {
 			boolean stateChange = flowers.draw(ribsv.x, ribsv.y, disappear);
 		}
 		else {
-			app.image(ribs, prevPosRibs[0], prevPosRibs[1] - .25f,
+			app.image(ribs, prevPosRibs.x, prevPosRibs.y - .25f,
 					  ribs.width/100, ribs.height/100);
 			
 			//draw flowers on the ribs
 			flowerCheck();
-			boolean stateChange = flowers.draw(prevPosRibs[0], prevPosRibs[1], disappear);
+			boolean stateChange = flowers.draw(prevPosRibs.x, prevPosRibs.y, disappear);
 //			if(stateChange && disappear) {
 //				noDecay = false;
 //			}
