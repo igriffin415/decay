@@ -121,22 +121,16 @@ public class Person {
 		
 		PVector leftH;
 		PVector rightH;
-		
-		//start at counter-1 and go backwards to counter
+
 		//drawing here vvv
-		
-		int start = counter - 1;
-		if(start < 0) {
-			start = TRAIL - (start * -1);  
-		}
 
 		for(int i = 0; i < TRAIL; i++){
-			if(counter == 0 && i ==0 ){
+			if(counter == 0 && i == 0 ){
 				 leftH = lefthandarray[0];
 				 rightH = righthandarray[0];
 			} else {
-				leftH = lefthandarray[(start+i)%TRAIL];
-				rightH = righthandarray[(start+i)%TRAIL];
+				leftH = lefthandarray[(counter+i)%TRAIL];
+				rightH = righthandarray[(counter+i)%TRAIL];
 			}
 
 			if(leftH != null && rightH != null){
