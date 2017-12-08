@@ -22,6 +22,9 @@ public class DecayApp extends PApplet{
 	private float sunY;
 	private float moonY;
 	private float setRate = .005f;
+	Decay currentState = Decay.Sun;
+	Person p;
+	Iterator<Body> i;
 	
 	LinkedHashMap<Long, Person> people;
 	
@@ -33,13 +36,13 @@ public class DecayApp extends PApplet{
 	}
 
 	public void setup() {	
-		try {
-			kinectReader = new KinectBodyDataProvider("test2.kinect", 1);
-		} catch (IOException e) {
-			System.out.println("Unable to create kinect producer");
-		}
+//		try {
+//			kinectReader = new KinectBodyDataProvider("test2.kinect", 1);
+//		} catch (IOException e) {
+//			System.out.println("Unable to create kinect producer");
+//		}
 				 
-		//kinectReader = new KinectBodyDataProvider(8008);
+		kinectReader = new KinectBodyDataProvider(8008);
 		
 		//set initial colors
 		r = sr;
@@ -58,36 +61,38 @@ public class DecayApp extends PApplet{
 		kinectReader.start();
 	}
 
-	public void draw() {		
+	public void draw() {
 		setScale(0.5f);
 		imageMode(CENTER);
-		background(0,0,0);
-				
-		KinectBodyData bodyData = kinectReader.getData();
-		
+		background(0, 0, 0);
+
+		KinectBodyData bodyData = kinectReader.getMostRecentData();
 		tracker.update(bodyData);
 		
-		 Iterator<Body> i = tracker.getPeople().values().iterator();
-		 if(i.hasNext()) {
+		drawBackground(currentState);
+		
+		i = tracker.getPeople().values().iterator();
+		
+		System.out.println(tracker.getPeople().values().size());
+		
+		if (i.hasNext()) {
 			Body b = i.next();
-			Person p;
 			p = people.get(b.getId());
-			if(p== null) {
-				 p = new Person(this);
-				 people.put(b.getId(), p);
+			if (p == null) {
+				p = new Person(this);
+				people.put(b.getId(), p);
 			}
-			for(Long id : people.keySet()) {
-				if(! tracker.getPeople().keySet().contains(id)) {
-					people.remove(id);
-				}
+			while (i.hasNext()) {
+				Body b2 = i.next();
+				if (!tracker.getPeople().keySet().contains(b2.getId()))
+					i.remove();
 			}
 
-			Decay currentState = p.getState();
-			drawBackground(currentState);
-			
+			currentState = p.getState();
+
 			p.update(b);
 			p.draw();
-		 }
+		}
 	}
 
 	private void drawBackground(Decay currentState) {

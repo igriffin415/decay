@@ -46,8 +46,8 @@ public class Person {
 		lefthandarray = new PVector[TRAIL];
 		righthandarray = new PVector[TRAIL];
 
-		prevPosLeft = new PVector(0,0,0);
-		prevPosRight = new PVector(0,0,0);
+		prevPosLeft = new PVector(999,999,0);
+		prevPosRight = new PVector(999,999,0);
 
 		counter = 0;
 	}
@@ -158,12 +158,13 @@ public class Person {
 			
 			//draw flower on head
 			app.image(headFlower, prevPosHead.x, prevPosHead.y+.2f, .2f, .2f);
-			if(disappear) {
-				//make it black
-				app.tint(0);
+			if (disappear) {
+				app.tint(230, 0, 150);
+				app.image(headFlower, prevPosHead.x, prevPosHead.y + .2f, .2f, .2f);
+				app.tint(255,255,255);
 			} else {
-				//color
-				app.tint(255);
+				app.tint(255, 255, 255);
+				app.image(headFlower, prevPosHead.x, prevPosHead.y + .2f, .2f, .2f);
 			}
 		}
 	}
@@ -222,7 +223,7 @@ public class Person {
 		
 		//if the hands are in front of the face-ish
 		float diam = 0.3f;
-		if(lefthandv != null && righthandv != null) {
+		if(lefthandv != null && righthandv != null && headv != null) {
 			if(Math.abs(lefthandv.x-headv.x) < diam && Math.abs(righthandv.x-headv.x) < diam
 					&& Math.abs(lefthandv.y-headv.y) < diam && Math.abs(righthandv.y-headv.y) < diam) {
 				
