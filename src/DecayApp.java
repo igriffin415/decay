@@ -34,7 +34,7 @@ public class DecayApp extends PApplet{
 
 	public void setup() {	
 		try {
-			kinectReader = new KinectBodyDataProvider("test.kinect", 1);
+			kinectReader = new KinectBodyDataProvider("test2.kinect", 1);
 		} catch (IOException e) {
 			System.out.println("Unable to create kinect producer");
 		}

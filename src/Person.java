@@ -211,27 +211,29 @@ public class Person {
 	}
 	
 	private void flowerCheck() {
-		if(ribsv != null) {
-			if(ribsv.x < 0) {
-				disappear = true;
-			}
-			else {
-				disappear = false;
-			}
-		}
-		
-		//if the hands are in front of the face-ish
-//		if(lefthandv != null && righthandv != null) {
-//			if(Math.abs(lefthandv.x-headv.x) < 1 && Math.abs(righthandv.x-headv.x) < 1
-//					&& Math.abs(lefthandv.y-headv.y) < 1 && Math.abs(righthandv.y-headv.y) < 1) {
-//				if(lefthandv.z < headv.z && righthandv.z < headv.z) {
-//					disappear = true;
-//				} else {
-//					disappear = false;
-//				}
-//			} else {
+//		if(ribsv != null) {
+//			if(ribsv.x < 0) {
+//				disappear = true;
+//			}
+//			else {
 //				disappear = false;
 //			}
 //		}
+		
+		//if the hands are in front of the face-ish
+		float diam = 0.3f;
+		if(lefthandv != null && righthandv != null) {
+			if(Math.abs(lefthandv.x-headv.x) < diam && Math.abs(righthandv.x-headv.x) < diam
+					&& Math.abs(lefthandv.y-headv.y) < diam && Math.abs(righthandv.y-headv.y) < diam) {
+				
+				if(lefthandv.z < headv.z && righthandv.z < headv.z) {
+					disappear = true;
+				} else {
+					disappear = false;
+				}
+			} else {
+				disappear = false;
+			}
+		}
 	}
 }
