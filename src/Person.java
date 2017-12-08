@@ -193,12 +193,12 @@ public class Person {
 			//draw flowers on the ribs
 			flowerCheck();
 			boolean stateChange = flowers.draw(prevPosRibs.x, prevPosRibs.y, disappear);
-			if (stateChange && disappear) {
-				state = Decay.Moon;
-			}
-			if (stateChange && !disappear) {
-				state = Decay.Sun;
-			}
+//			if (stateChange && disappear) {
+//				state = Decay.Moon;
+//			}
+//			if (stateChange && !disappear) {
+//				state = Decay.Sun;
+//			}
 		}
 	}
 	
@@ -214,9 +214,11 @@ public class Person {
 		if(ribsv != null) {
 			if(ribsv.x < 0) {
 				disappear = true;
+				state = Decay.Moon;
 			}
 			else {
 				disappear = false;
+				state = Decay.Sun;
 			}
 		}
 		
