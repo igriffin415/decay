@@ -9,7 +9,7 @@ import processing.core.PVector;
 
 public class DecayApp extends PApplet{
 	public static float PROJECTOR_RATIO = 1080f/1920.0f;
-	float top, bottom;
+	//float width, heightE;
 	
 	PGraphics buffer;
 	
@@ -68,8 +68,8 @@ public class DecayApp extends PApplet{
 
 			p.update(b);
 			p.draw();
-			buffer = p.drawHandTrails();
-			image(buffer, 0,0);
+			//buffer = p.drawHandTrails();
+			//image(buffer, 0,0);
 		 }
 	}
 	
@@ -98,8 +98,10 @@ public class DecayApp extends PApplet{
 	public void setScale(float zoom) {
 		scale(zoom* width/2.0f, zoom * -width/2.0f);
 		translate(1f/zoom , -PROJECTOR_RATIO/zoom );
-		top = 1f/zoom;
-		bottom = -PROJECTOR_RATIO/zoom;
+		
+		//height = 2f * (PROJECTOR_RATIO/zoom);
+		//width = 2f * (1f/zoom);
+		//System.out.println(this.height + " " + 2f * (PROJECTOR_RATIO/zoom));
 		
 	}
 	

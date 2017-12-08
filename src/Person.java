@@ -78,13 +78,13 @@ public class Person {
 	public void draw() {
 		this.drawHead();
 		this.drawRibs();
-		//this.drawHandTrails();
+		this.drawHandTrails();
 	}
 	
 	
 	public PGraphics drawHandTrails(){
 		buffer.beginDraw();
-        buffer.imageMode( app.CENTER );
+       // buffer.imageMode(app.CENTER );
 //        if(righthandv != null)
 //        	buffer.image(smoke, righthandv.x, righthandv.y, .1f, .1f);
 //        else
@@ -93,17 +93,29 @@ public class Person {
 //        	buffer.image(smoke, lefthandv.x, lefthandv.y, .1f, .1f);
 //        else
 //        	buffer.image(smoke, prevPosLeft.x, prevPosLeft.y, .1f, .1f);
-        
-        if(righthandv != null)
-        	buffer.ellipse(righthandv.x, righthandv.y, .1f, .1f);
-        else
-        	buffer.ellipse(prevPosRight.x, prevPosRight.y, .1f, .1f);
-        if(lefthandv != null)
-        	buffer.ellipse(lefthandv.x, lefthandv.y, .1f, .1f);
-        else
-        	buffer.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
+        buffer.noStroke();
+        buffer.fill(125);
+        buffer.ellipse(0, 0, 0.1f, 0.1f);
+//        if(righthandv != null) 
+//        	buffer.ellipse(righthandv.x, righthandv.y, .1f, .1f);
+//        else
+//        	buffer.ellipse(prevPosRight.x, prevPosRight.y, .1f, .1f);
+//        if(lefthandv != null)
+//        	buffer.ellipse(lefthandv.x, lefthandv.y, .1f, .1f);
+//        else
+//        	buffer.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
         
         buffer.endDraw();
+        app.image(buffer, 0, 0);
+        
+//        app.fill(125);
+//        app.noStroke();
+//        
+//        if(lefthandv != null)
+//        	app.ellipse(lefthandv.x, lefthandv.y, .1f, .1f);
+//        else
+//        	app.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
+        
         return buffer;
         //app.image(buffer, 0, 0);
 		
