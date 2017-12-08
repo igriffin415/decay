@@ -102,15 +102,15 @@ public class Person {
 			}
 
 			if(leftH != null && rightH != null){
-//				app.image(smoke, leftH.x, leftH.y,
-//							.2f, .2f);
-//				app.image(smoke, rightH.x, rightH.y,
-//						.2f, .2f);
+				app.image(smoke, leftH.x, leftH.y,
+							.2f, .2f);
+				app.image(smoke, rightH.x, rightH.y,
+						.2f, .2f);
 				
-				app.fill(192, ((255/TRAIL) * i));
-				app.noStroke();
-				app.ellipse(leftH.x, leftH.y, .1f, .1f);
-				app.ellipse(rightH.x, rightH.y, .1f, .1f);
+//				app.fill(192, ((255/TRAIL) * i));
+//				app.noStroke();
+//				app.ellipse(leftH.x, leftH.y, .1f, .1f);
+//				app.ellipse(rightH.x, rightH.y, .1f, .1f);
 			}
 		}
 		
