@@ -20,7 +20,8 @@ public class Flower {
 		this.parent = parent;
 		this.relativeX = relativeX;
 		this.relativeY = relativeY;
-		growRate = parent.random(0,.005f);
+		growRate = parent.random(.00005f,.0015f);
+//		growRate = parent.random(.001f, .005f); //much faster grow rate for testing
 		selectFlower();
 	}
 	

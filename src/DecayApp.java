@@ -12,10 +12,16 @@ public class DecayApp extends PApplet{
 	String recordingFile = "test.kinect";
 	KinectBodyDataProvider kinectReader;
 	PersonTracker tracker = new PersonTracker();
+	private int r, g, b; //current color values
+	private static int sr = 0, sg = 153, sb = 255; //final values for the sun state
+	private static int mr = 150, mg = 0, mb = 50; //final values for the moon state
+	private float sunY;
+	private float moonY;
+	private float setRate = .005f;
 	
 	LinkedHashMap<Long, Person> people;
 	
-	PImage fadeImage;
+	PImage fadeImage, sunImage, moonImage;
 	
 	
 	public void settings() {
@@ -31,18 +37,28 @@ public class DecayApp extends PApplet{
 				 
 		//kinectReader = new KinectBodyDataProvider(8008);
 		
+		//set initial colors
+		r = sr;
+		g = sg;
+		b = sb;
+		
+		//set planet coords
+		sunY = .5f;
+		moonY = -3.5f;
+		
 		people = new LinkedHashMap<Long, Person>();
+		fadeImage = loadImage("assets/featuredbgfadeflipped.png");
+		sunImage = loadImage("assets/sun.png");
+		moonImage = loadImage("assets/moon.png");
 		
 		kinectReader.start();
 	}
 
-	public void draw() {
-		fadeImage = loadImage("assets/featuredBGFade.png");
-		fadeImage.resize(this.displayWidth, this.displayHeight);
+	public void draw() {		
 		setScale(0.5f);
 		imageMode(CENTER);
 		background(0,0,0);
-		
+				
 		KinectBodyData bodyData = kinectReader.getData();
 		
 		tracker.update(bodyData);
@@ -62,10 +78,57 @@ public class DecayApp extends PApplet{
 				}
 			}
 
+			Decay currentState = p.getState();
+			drawBackground(currentState);
+			
 			p.update(b);
 			p.drawRibs();
 			p.drawHead();
 		 }
+	}
+
+	private void drawBackground(Decay currentState) {
+		if (currentState == Decay.Sun) {
+			//move/draw the sun
+			if(sunY < .5) 
+				sunY += setRate;
+			image(sunImage, 1, sunY, 1, 1);
+			if(moonY > -3.5)
+				moonY -= setRate;
+			image(moonImage, -1, moonY, 1, 1);
+			
+			//de/increment colors
+			if(r > sr)
+				r--;
+			if(g < sg)
+				g++;
+			if(b < sb)
+				b++;
+			//draw the background
+			tint(r, g, b);
+			image(fadeImage, 0, 0, this.displayWidth / 250, this.displayHeight / 250);
+			tint(255, 255, 255);
+		} else if (currentState == Decay.Moon) {
+			//move/draw the moon
+			if(moonY < .5)
+				moonY += setRate;
+			image(moonImage, -1, moonY, 1, 1);
+			if(sunY > -3.5)
+				sunY -= setRate;
+			image(sunImage, 1, sunY, 1, 1);
+			
+			//de/increment colors
+			if(r < mr)
+				r++;
+			if(g > mg)
+				g--;
+			if(b > mb)
+				b--;
+			//draw the background
+			tint(r, g, b);
+			image(fadeImage, 0, 0, this.displayWidth / 250, this.displayHeight / 250);
+			tint(255,255,255);
+		}
 	}
 	
 	

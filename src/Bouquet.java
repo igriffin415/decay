@@ -80,13 +80,18 @@ public class Bouquet {
 	}
 	
 	public boolean draw(float newX, float newY, boolean disappear) {
-		boolean stateChange = false;
+		boolean stateChange = true;
+		boolean tempCheck = false;
 		for(Flower flower : flowerList) {
 			if(disappear) {
-				stateChange = flower.vanish();
+				tempCheck = flower.vanish();
 			} else {
-				stateChange = flower.grow();
+				tempCheck = flower.grow();
 			}
+			//only change the state if EVERY flower is done disappearing/growing
+			if(!tempCheck) 
+				stateChange = false;
+			
 			flower.draw(newX, newY);
 		}
 		return stateChange;

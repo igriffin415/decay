@@ -10,7 +10,8 @@ public class Person {
 	private Bouquet flowers;
 	private boolean disappear = false; //true if flowers should be disappearing
 	PImage headFlower;
-	private boolean noDecay = true;
+	
+	private Decay state;
 	
 	float[] prevPosHead;
 	float[] prevPosRibs;
@@ -23,6 +24,7 @@ public class Person {
 		headFlower = app.loadImage("assets/pinkflower.png");
 		prevPosHead = new float[] {0.0f, 0.0f};
 		prevPosRibs = new float[] {0.0f, 0.0f};
+		state = Decay.Sun;
 	}
 
 	public void update(Body body) {
@@ -38,11 +40,15 @@ public class Person {
 	 * Display the background appropriate to the current state
 	 */
 	public void drawBackground() {
-		if(noDecay) {
+		if(state == Decay.Sun) {
 			//nice background
-		} else {
+		} else if(state == Decay.Moon) {
 			//vein thing
 		}
+	}
+	
+	public Decay getState() {
+		return state;
 	}
 	
 	public void drawHead() {
@@ -54,14 +60,14 @@ public class Person {
 					  1.3f, 1.1f);
 			
 			//draw flower on head
-			app.image(headFlower, headv.x, headv.y+.2f, .2f, .2f);
-//			if(disappear) {
-//				//make it black
-//				app.tint(0);
-//			} else {
-//				//color
-//				app.tint(255);
-//			}
+			if (disappear) {
+				app.tint(230, 0, 150);
+				app.image(headFlower, headv.x, headv.y + .2f, .2f, .2f);
+				app.tint(255,255,255);
+			} else {
+				app.tint(255, 255, 255);
+				app.image(headFlower, headv.x, headv.y + .2f, .2f, .2f);
+			}
 		}
 		else {
 			app.image(head, prevPosHead[0], prevPosHead[1]+.1f,
@@ -91,6 +97,12 @@ public class Person {
 			//draw flowers on the ribs
 			flowerCheck();
 			boolean stateChange = flowers.draw(ribsv.x, ribsv.y, disappear);
+			if (stateChange && disappear) {
+				state = Decay.Moon;
+			}
+			if (stateChange && !disappear) {
+				state = Decay.Sun;
+			}
 		}
 		else {
 			app.image(ribs, prevPosRibs[0], prevPosRibs[1] - .25f,
@@ -99,12 +111,12 @@ public class Person {
 			//draw flowers on the ribs
 			flowerCheck();
 			boolean stateChange = flowers.draw(prevPosRibs[0], prevPosRibs[1], disappear);
-//			if(stateChange && disappear) {
-//				noDecay = false;
-//			}
-//			if(stateChange && !disappear) {
-//				noDecay = true;
-//			}
+			if (stateChange && disappear) {
+				state = Decay.Moon;
+			}
+			if (stateChange && !disappear) {
+				state = Decay.Sun;
+			}
 		}
 	}
 	
@@ -125,5 +137,19 @@ public class Person {
 				disappear = false;
 			}
 		}
+		
+		//if the hands are in front of the face-ish
+//		if(lefthandv != null && righthandv != null) {
+//			if(Math.abs(lefthandv.x-headv.x) < 1 && Math.abs(righthandv.x-headv.x) < 1
+//					&& Math.abs(lefthandv.y-headv.y) < 1 && Math.abs(righthandv.y-headv.y) < 1) {
+//				if(lefthandv.z < headv.z && righthandv.z < headv.z) {
+//					disappear = true;
+//				} else {
+//					disappear = false;
+//				}
+//			} else {
+//				disappear = false;
+//			}
+//		}
 	}
 }
