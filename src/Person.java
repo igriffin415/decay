@@ -83,8 +83,10 @@ public class Person {
 	
 	
 	public void drawHandTrails(){
-//		buffer.beginDraw();
-       // buffer.imageMode(app.CENTER );
+		buffer.beginDraw();
+		
+		
+//        buffer.imageMode(app.CENTER );
 //        if(righthandv != null)
 //        	buffer.image(smoke, righthandv.x, righthandv.y, .1f, .1f);
 //        else
@@ -93,63 +95,26 @@ public class Person {
 //        	buffer.image(smoke, lefthandv.x, lefthandv.y, .1f, .1f);
 //        else
 //        	buffer.image(smoke, prevPosLeft.x, prevPosLeft.y, .1f, .1f);
-//        buffer.noStroke();
-//        buffer.fill(125);
-//        buffer.ellipse(0, 0, 0.1f, 0.1f);
-//        if(righthandv != null) 
-//        	buffer.ellipse(righthandv.x, righthandv.y, .1f, .1f);
-//        else
-//        	buffer.ellipse(prevPosRight.x, prevPosRight.y, .1f, .1f);
-//        if(lefthandv != null)
-//        	buffer.ellipse(lefthandv.x, lefthandv.y, .1f, .1f);
-//        else
-//        	buffer.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
+		
+        buffer.noStroke();
+        buffer.fill(125);
+        buffer.ellipse(0, 0, 0.1f, 0.1f);
+        if(righthandv != null) 
+        	buffer.ellipse(righthandv.x, righthandv.y, .1f, .1f);
+        else
+        	buffer.ellipse(prevPosRight.x, prevPosRight.y, .1f, .1f);
+        if(lefthandv != null)
+        	buffer.ellipse(lefthandv.x, lefthandv.y, .1f, .1f);
+        else
+        	buffer.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
         
-//        buffer.endDraw();
-//        app.image(buffer, 0, 0);
-        
-//        app.fill(125);
-//        app.noStroke();
-//        
-//        if(lefthandv != null)
-//        	app.ellipse(lefthandv.x, lefthandv.y, .1f, .1f);
-//        else
-//        	app.ellipse(prevPosLeft.x, prevPosLeft.y, .1f, .1f);
+        buffer.endDraw();
+        app.image(buffer, 0, 0);
         
         //return buffer;
         //app.image(buffer, 0, 0);
 		
-		PVector leftH;
-		PVector rightH;
-
-		//drawing here vvv
-
-		for(int i = 0; i < TRAIL; i++){
-			if(counter == 0 && i == 0 ){
-				 leftH = lefthandarray[0];
-				 rightH = righthandarray[0];
-			} else {
-				leftH = lefthandarray[(counter+i)%TRAIL];
-				rightH = righthandarray[(counter+i)%TRAIL];
-			}
-
-			if(leftH != null && rightH != null){
-//				app.image(smoke, leftH.x, leftH.y,
-//							.2f, .2f);
-//				app.image(smoke, rightH.x, rightH.y,
-//						.2f, .2f);
-				
-				app.fill(192, ((255/TRAIL) * i));
-				app.noStroke();
-				app.ellipse(leftH.x, leftH.y, .1f, .1f);
-				app.ellipse(rightH.x, rightH.y, .1f, .1f);
-			}
-		}
 		
-		counter++;
-		if(counter >= TRAIL){
-			counter = 0;
-		}
 	}
 	
 	/**
