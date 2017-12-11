@@ -73,7 +73,6 @@ public class DecayApp extends PApplet{
 		
 		i = tracker.getPeople().values().iterator();
 		
-		System.out.println(tracker.getPeople().values().size());
 		
 		if (i.hasNext()) {
 			Body b = i.next();
