@@ -36,13 +36,13 @@ public class DecayApp extends PApplet{
 	}
 
 	public void setup() {	
-//		try {
-//			kinectReader = new KinectBodyDataProvider("test2.kinect", 1);
-//		} catch (IOException e) {
-//			System.out.println("Unable to create kinect producer");
-//		}
+		try {
+			kinectReader = new KinectBodyDataProvider("test2.kinect", 1);
+		} catch (IOException e) {
+			System.out.println("Unable to create kinect producer");
+		}
 				 
-		kinectReader = new KinectBodyDataProvider(8008);
+		//kinectReader = new KinectBodyDataProvider(8008);
 		
 		//set initial colors
 		r = sr;

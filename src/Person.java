@@ -136,21 +136,22 @@ public class Person {
 	}
 	
 	public void drawHead() {
-		if(headv != null) {
-			prevPosHead = headv;
-			
-			app.image(head, headv.x, headv.y+.1f,
+		if(headv != null) {	
+			float smoothx = (prevPosHead.x+headv.x)/2f;
+			float smoothy = (prevPosHead.y+headv.y)/2f;
+			app.image(head, smoothx, smoothy+.1f,
 					  1.3f, 1.1f);
 			
 			//draw flower on head
 			if (disappear) {
 				app.tint(230, 0, 150);
-				app.image(headFlower, headv.x, headv.y + .2f, .2f, .2f);
+				app.image(headFlower, smoothx, smoothy + .2f, .2f, .2f);
 				app.tint(255,255,255);
 			} else {
 				app.tint(255, 255, 255);
-				app.image(headFlower, headv.x, headv.y + .2f, .2f, .2f);
+				app.image(headFlower, smoothx, smoothy + .2f, .2f, .2f);
 			}
+			prevPosHead = headv;
 		}
 		else {
 			app.image(head, prevPosHead.x, prevPosHead.y+.1f,
@@ -170,22 +171,23 @@ public class Person {
 	}
 	
 	public void drawRibs() {
-		if(ribsv != null) {
-			prevPosRibs = ribsv;
-			
+		if(ribsv != null) {		
+			float smoothx = (prevPosRibs.x+ribsv.x)/2f;
+			float smoothy = (prevPosRibs.y+ribsv.y)/2f;
 			//draw ribs themselves
-			app.image(ribs, ribsv.x, ribsv.y - .25f,
+			app.image(ribs, smoothx, smoothy - .25f,
 					  ribs.width/100, ribs.height/100);
 			
 			//draw flowers on the ribs
 			flowerCheck();
-			boolean stateChange = flowers.draw(ribsv.x, ribsv.y, disappear);
+			boolean stateChange = flowers.draw(smoothx, smoothy, disappear);
 			if (stateChange && disappear) {
 				state = Decay.Moon;
 			}
 			if (stateChange && !disappear) {
 				state = Decay.Sun;
 			}
+			prevPosRibs = ribsv;
 		}
 		else {
 			app.image(ribs, prevPosRibs.x, prevPosRibs.y - .25f,
